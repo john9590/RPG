@@ -8,8 +8,8 @@ ADragon::ADragon()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	skills.Add(FSkill(0.0f, 0.0f, 0.0f, 1));
-	skills.Add(FSkill(3.0f, 0.0f, 0.0f, 1));
+	skills.Add(FSkill(0.0f, 100000.0f, 0.0f, 1));
+	skills.Add(FSkill(3.0f, 100.0f, 0.0f, 1));
 	Direction = FVector(0.0f, 0.0f, 0.0f);
 	isMoving = false;
 	isPlaying = false;
@@ -57,7 +57,7 @@ void ADragon::AttackMouth()
 	if (animes[amidx]) GetMesh()->PlayAnimation(animes[amidx], false);
 	//FPlatformProcess::Sleep(0.5f);
 	//�̶� �÷��̾ ���� �Ÿ� �ȿ� ������ ������
-	if ((UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation() - GetActorLocation()).Size() < 1000.0f) {
+	if ((UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation() - GetActorLocation()).Size() < 100.0f) {
 		UE_LOG(LogTemp, Log, TEXT("Hit"));
 	}
 	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::isPlayingoff, 1.0f, false);
@@ -129,7 +129,7 @@ void ADragon::Tick(float DeltaTime)
 	float distance = Direction.Length();
 	for (int i = 0; i < skills.Num(); i++) {
 		if (skills[i].cool > skills[i].curcool) continue;
-		if (skills[i].distance > distance) continue;
+		if (skills[i].distance < distance) continue;
 		if (skills[i].MP > MP) continue;
 		avskill.Add(i);
 		randvalue += skills[i].rand;
