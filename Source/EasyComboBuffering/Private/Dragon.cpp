@@ -98,7 +98,7 @@ void ADragon::Tick(float DeltaTime)
 	for (int i = 0; i < skills.Num(); i++) skills[i].curcool += DeltaTime;
 	//Playing animation without Moving wait until it finished
 	if (!isMoving && GetMesh()->IsPlaying()) return;
-	int rand = 0;
+	int randvalue = 0;
 	Direction = GetActorLocation() - UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation();
 	float distance = Direction.Length();
 	for (int i = 0; i < skills.Num(); i++) {
@@ -106,15 +106,15 @@ void ADragon::Tick(float DeltaTime)
 		if (skills[i].distance > distance) continue;
 		if (skills[i].MP > MP) continue;
 		avskill.Add(i);
-		rand += skills[i].rand;
+		randvalue += skills[i].rand;
 	}
-	int rand = FGenericPlatformMath::Rand() % rand;
+	randvalue = FGenericPlatformMath::Rand() % randvalue;
 	for (int i : avskill) {
-		if (skills[i].rand < rand) {
+		if (skills[i].rand < randvalue) {
 			CallSkill((ESkill)i);
 			return;
 		}
-		rand -= skills[i].rand;
+		randvalue -= skills[i].rand;
 	}
 }
 

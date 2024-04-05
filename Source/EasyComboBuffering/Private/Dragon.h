@@ -30,6 +30,13 @@ public:
 	UAnimationAsset* anime;
 };
 
+enum ESkill {
+	mvidx,
+	amidx,
+	afidx,
+	scidx
+};
+
 UCLASS()
 class ADragon : public ACharacter
 {
@@ -64,11 +71,4 @@ private:
 	bool isMoving;
 	AFireBall* fireball;
 	AUser* User;
-};
-
-enum ESkill {
-	mvidx,
-	amidx,
-	afidx,
-	scidx
 };
