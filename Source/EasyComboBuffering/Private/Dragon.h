@@ -66,9 +66,14 @@ private:
 	float MaxMP;
 	//UPROPERTY(EditAnywhere)
 	TArray<FSkill> skills;
+	UPROPERTY(EditAnywhere)
+	TArray<UAnimationAsset*> animes;
 	FVector Direction;
 	ESkill skillidx;
 	bool isMoving;
 	AFireBall* fireball;
 	AUser* User;
+	float mvamount;
+	UPROPERTY(EditAnywhere)
+	float w_speed;
 };
