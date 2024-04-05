@@ -51,6 +51,7 @@ protected:
 	virtual void BeginPlay() override;
 	void Move();
 	void Stop();
+	void isPlayingoff();
 	void AttackMouth();
 	void AttackFireBall();
 	void Scream();
@@ -72,8 +73,11 @@ private:
 	ESkill skillidx;
 	bool isMoving;
 	AFireBall* fireball;
+	UPROPERTY(EditAnywhere)
 	AUser* User;
 	float mvamount;
 	UPROPERTY(EditAnywhere)
 	float w_speed;
+	bool isPlaying;
+	FTimerHandle TimerHandler;
 };
