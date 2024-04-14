@@ -7,34 +7,42 @@
 AFireBall::AFireBall()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	DefaultScene = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
+	UE_LOG(LogTemp, Log, TEXT("Constructor"));
 	sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
-	sphere->AttachToComponent(DefaultScene, FAttachmentTransformRules::KeepRelativeTransform);
-	sphere->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
+	//sphere->AttachToComponent(DefaultScene, FAttachmentTransformRules::KeepRelativeTransform);
+	//sphere->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
 	//sphere->SetSimulatePhysics(true);
 	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
+	RootComponent = ParticleSystem;
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> FireBallAsset(TEXT("P_ky_fireBall'/Game/FXVarietyPack/Particles/P_ky_fireBall'"));
+	ky_explosion = LoadObject<UParticleSystem>(nullptr, TEXT("/Game/FXVarietyPack/Particles/P_ky_explosion.P_ky_explosion"));
+	//static ConstructorHelpers::FObjectFinder<UParticleSystem> explosionAsset(TEXT("P_ky_explosion'/Game/FXVarietyPack/Particles/P_ky_explosion'"));
 	if (FireBallAsset.Succeeded()) ParticleSystem->SetTemplate(FireBallAsset.Object);
-	ParticleSystem->SetRelativeScale3D(FVector(10.0f, 10.0f, 10.0f));
+	ParticleSystem->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
 	isThrow = false;
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void AFireBall::Throw(FVector pSpeed, float ptime)
 {
 	isThrow = true;
-	time = ptime;
+	time = ptime + 2.0f;
 	curtime = 0.0f;
 	Speed = pSpeed;
 }
 
+void AFireBall::FbDestory()
+{
+	while (!Destroy());
+}
+
 void AFireBall::Explosion()
 {
-	static ConstructorHelpers::FObjectFinder<UParticleSystem> FireBallAsset(TEXT("P_ky_explosion'/Game/FXVarietyPack/Particles/P_ky_explosion'"));
-	if (FireBallAsset.Succeeded()) ParticleSystem->SetTemplate(FireBallAsset.Object);
-	if ((User->GetActorLocation() - GetActorLocation()).Size() < 100.0f) User->Hit(100.0f);
-	FPlatformProcess::Sleep(1.0f);
-	while (!Destroy());
+	//UParticleSystem* temp = LoadObject<UParticleSystem>(nullptr, TEXT("P_ky_explosion'/Game/FXVarietyPack/Particles/P_ky_explosion'"));
+	if (ky_explosion) ParticleSystem->SetTemplate(ky_explosion);
+	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &AFireBall::FbDestory, 1.0f, false);
+	//if ((User->GetActorLocation() - GetActorLocation()).Size() < 100.0f) User->Hit(100.0f);
+	//FPlatformProcess::Sleep(1.0f);
 }
 
 void AFireBall::Prediction()
@@ -55,21 +63,28 @@ void AFireBall::Prediction()
 void AFireBall::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AFireBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	//UE_LOG(LogTemp, Log, TEXT("FireballTick"));
 	if (isThrow) {
 		curtime += DeltaTime;
-		if (curtime >= time) {
+		FVector Direction = GetActorLocation() - UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation();
+		if (Direction.Length() < 100.0f) {
 			Explosion();
 			isThrow = false;
+			return;
+		}
+		if (GetActorLocation().Z < -100.0f) {
+			FbDestory();
+			isThrow = false;
+			return;
 		}
 		SetActorLocation(GetActorLocation() + Speed * DeltaTime);
-		Speed.Z -= 9.8f * DeltaTime;
+		Speed.Z -= 5.0f * 9.8f * DeltaTime;
 	}
 }
 

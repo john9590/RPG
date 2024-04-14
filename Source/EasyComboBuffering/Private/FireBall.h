@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "User.h"
 #include "FireBall.generated.h"
 
@@ -18,6 +19,7 @@ public:
 	// Sets default values for this actor's properties
 	AFireBall();
 	void Throw(FVector pSpeed, float ptime);
+	void FbDestory();
 	void Explosion();
 	void Prediction();
 
@@ -38,5 +40,7 @@ private:
 	float curtime;
 	FVector Speed;
 	UPROPERTY(EditAnywhere)
+	FTimerHandle TimerHandler;
 	AUser* User;
+	UParticleSystem* ky_explosion;
 };

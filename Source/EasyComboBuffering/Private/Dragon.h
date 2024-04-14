@@ -80,4 +80,6 @@ private:
 	float w_speed;
 	bool isPlaying;
 	FTimerHandle TimerHandler;
+	UPROPERTY(EditAnywhere)
+	float fb_time;
 };

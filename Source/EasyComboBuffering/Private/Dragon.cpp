@@ -9,7 +9,8 @@ ADragon::ADragon()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	skills.Add(FSkill(0.0f, 100000.0f, 0.0f, 1));
-	skills.Add(FSkill(3.0f, 100.0f, 0.0f, 1));
+	skills.Add(FSkill(3.0f, 500.0f, 0.0f, 1));
+	skills.Add(FSkill(1.0f, 2000.0f, 100.0f, 1));
 	Direction = FVector(0.0f, 0.0f, 0.0f);
 	isMoving = false;
 	isPlaying = false;
@@ -57,7 +58,7 @@ void ADragon::AttackMouth()
 	if (animes[amidx]) GetMesh()->PlayAnimation(animes[amidx], false);
 	//FPlatformProcess::Sleep(0.5f);
 	//�̶� �÷��̾ ���� �Ÿ� �ȿ� ������ ������
-	if ((UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation() - GetActorLocation()).Size() < 100.0f) {
+	if ((UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation() - GetActorLocation()).Size() < 500.0f) {
 		UE_LOG(LogTemp, Log, TEXT("Hit"));
 	}
 	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::isPlayingoff, 1.0f, false);
@@ -67,19 +68,22 @@ void ADragon::AttackMouth()
 
 void ADragon::AttackFireBall()
 {
-	Stop();
-	if (skills[afidx].anime) GetMesh()->PlayAnimation(skills[afidx].anime, false);
-	FPlatformProcess::Sleep(0.5f);
-	fireball = CreateDefaultSubobject<AFireBall>(TEXT("FireBall"));
-	fireball->SetActorLocation(GetActorLocation());
-	float distance = FVector2D(Direction.X, Direction.Y).Length();
-	distance = FMath::Max(0.001f, distance);
-	float time = 100.0f;
-	float xyspeed = distance / time;
-	float zspeed = abs(Direction.Z / time) + 0.5f * time * 9.8f;
-	float x = xyspeed * Direction.X / distance;
-	float y = xyspeed * Direction.Y / distance;
-	fireball->Throw(FVector(x, y, zspeed), time);
+	//FPlatformProcess::Sleep(0.5f);
+	FVector GetRot = FVector(Direction.X, Direction.Y, 0.0f);
+	FVector initpos = GetRot.GetSafeNormal();//(GetRot.Rotation() + FRotator(0.0f, 90.0f, 0.0f)).Vector();
+	initpos = FVector(270.0f * initpos.X, 270.0f * initpos.Y, -260.0f);
+	fireball = (AFireBall*)GetWorld()->SpawnActor<AFireBall>(AFireBall::StaticClass(), GetActorLocation() - initpos, GetActorRotation());
+	//if (fireball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform)) UE_LOG(LogTemp,Log,TEXT("A"));
+	///if (fireball->SetActorLocation(GetActorLocation())) UE_LOG(LogTemp,Log,TEXT("B"));
+	FVector2D xyVector = -FVector2D(Direction.X - initpos.X, Direction.Y - initpos.Y);
+	float distance = FMath::Max(xyVector.Length(), 0.001f);
+	float xyspeed = distance / fb_time;
+	float zspeed = (-Direction.Z + initpos.Z)/ fb_time + 2.5f * fb_time * 9.8f;
+	float x = xyspeed * xyVector.GetSafeNormal().X;
+	float y = xyspeed * xyVector.GetSafeNormal().Y;
+	fireball->Throw(FVector(x, y, zspeed), fb_time);
+	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::isPlayingoff, 5.0f, false);
+	UE_LOG(LogTemp, Log, TEXT("%f %f"), initpos.X, initpos.Y);
 	//fireball->sphere->AddForce(FVector(-100000.0f, 0.0f, 100000.0f));
 }
 
@@ -94,8 +98,9 @@ void ADragon::Scream()
 
 void ADragon::CallSkill(ESkill i)
 {
+	FVector GetRot = FVector(Direction.X, Direction.Y, 0.0f);
 	//Move�� ĵ�� ���� �������� ĵ�� �Ұ���
-	UE_LOG(LogTemp, Log, TEXT("dhodksehoTLqkf"));
+	//UE_LOG(LogTemp, Log, TEXT("dhodksehoTLqkf"));
 	switch (i) {
 		case mvidx:
 			Move();
@@ -104,7 +109,12 @@ void ADragon::CallSkill(ESkill i)
 			AttackMouth();
 			break;
 		case afidx:
-			AttackFireBall();
+			isMoving = false;
+			isPlaying = true;
+			skills[afidx].curcool = 0.0f;
+			SetActorRotation(GetRot.Rotation() + FRotator(0.0f, 90.0f, 0.0f));
+			if (animes[afidx]) GetMesh()->PlayAnimation(animes[afidx], false);
+			GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::AttackFireBall, 0.5f, false);
 			break;
 		default:
 			break;
@@ -121,6 +131,7 @@ void ADragon::Tick(float DeltaTime)
 	mvamount = DeltaTime;
 	TArray<int> avskill;
 	for (int i = 0; i < skills.Num(); i++) skills[i].curcool += DeltaTime;
+	//if (fireball) fireball->Tick(DeltaTime);
 	//Playing animation without Moving wait until it finished
 	//if (!isMoving && GetMesh()->IsPlaying()) return;
 	if (isPlaying) return;
@@ -134,10 +145,10 @@ void ADragon::Tick(float DeltaTime)
 		avskill.Add(i);
 		randvalue += skills[i].rand;
 	}
-	UE_LOG(LogTemp, Log, TEXT("%d"),randvalue);
+	//UE_LOG(LogTemp, Log, TEXT("%d"),randvalue);
 	//Move();
-	//CallSkill((ESkill)1);
-	
+	CallSkill(afidx);
+	/*
 	if (randvalue > 0) {
 		randvalue = FGenericPlatformMath::Rand() % randvalue;
 		UE_LOG(LogTemp, Log, TEXT("%d"), randvalue);
@@ -149,5 +160,6 @@ void ADragon::Tick(float DeltaTime)
 			randvalue -= skills[i].rand;
 		}
 	}
+	*/
 }
 
