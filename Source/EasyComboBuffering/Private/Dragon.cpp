@@ -14,6 +14,7 @@ ADragon::ADragon()
 	Direction = FVector(0.0f, 0.0f, 0.0f);
 	isMoving = false;
 	isPlaying = false;
+	player = Cast<AUser>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 }
 
 // Called when the game starts or when spawned
@@ -58,8 +59,9 @@ void ADragon::AttackMouth()
 	if (animes[amidx]) GetMesh()->PlayAnimation(animes[amidx], false);
 	//FPlatformProcess::Sleep(0.5f);
 	//�̶� �÷��̾ ���� �Ÿ� �ȿ� ������ ������
-	if ((UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation() - GetActorLocation()).Size() < 500.0f) {
-		UE_LOG(LogTemp, Log, TEXT("Hit"));
+	if ((player->GetActorLocation() - GetActorLocation()).Size() < 500.0f) {
+		player->Hit(3.0f);
+		//UE_LOG(LogTemp, Log, TEXT("Hit"));
 	}
 	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::isPlayingoff, 1.0f, false);
 	//FPlatformProcess::Sleep(1.0f);
@@ -93,7 +95,7 @@ void ADragon::Scream()
 	if (skills[scidx].anime) GetMesh()->PlayAnimation(skills[scidx].anime, false);
 	FPlatformProcess::Sleep(0.5f);
 	//�̶� �÷��̾ ���� �Ÿ� �ȿ� ������ �׷α�
-	if ((User->GetActorLocation() - GetActorLocation()).Size() < 100.0f) User->Groggy(3.0f);
+	if ((player->GetActorLocation() - GetActorLocation()).Size() < 100.0f) player->Groggy(3.0f);
 }
 
 void ADragon::CallSkill(ESkill i)
@@ -136,7 +138,7 @@ void ADragon::Tick(float DeltaTime)
 	//if (!isMoving && GetMesh()->IsPlaying()) return;
 	if (isPlaying) return;
 	int randvalue = 0;
-	Direction = GetActorLocation() - UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation();
+	Direction = GetActorLocation() - player->GetActorLocation();
 	float distance = Direction.Length();
 	for (int i = 0; i < skills.Num(); i++) {
 		if (skills[i].cool > skills[i].curcool) continue;

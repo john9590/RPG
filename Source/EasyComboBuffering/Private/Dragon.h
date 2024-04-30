@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "FireBall.h"
+#include "User.h"
 #include "Dragon.generated.h"
 
 USTRUCT()
@@ -74,7 +75,6 @@ private:
 	bool isMoving;
 	AFireBall* fireball;
 	UPROPERTY(EditAnywhere)
-	AUser* User;
 	float mvamount;
 	UPROPERTY(EditAnywhere)
 	float w_speed;
@@ -82,4 +82,5 @@ private:
 	FTimerHandle TimerHandler;
 	UPROPERTY(EditAnywhere)
 	float fb_time;
+	AUser* player;
 };
