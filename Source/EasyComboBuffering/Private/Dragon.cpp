@@ -8,19 +8,24 @@ ADragon::ADragon()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	AIControllerClass = ADragonAI::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	skills.Add(FSkill(0.0f, 100000.0f, 0.0f, 1));
 	skills.Add(FSkill(3.0f, 500.0f, 0.0f, 1));
 	skills.Add(FSkill(5.0f, 100000.0f, 1.0f, 1));
 	Direction = FVector(0.0f, 0.0f, 0.0f);
 	isMoving = false;
 	isPlaying = false;
-	player = Cast<AUser>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	player = NULL;
+	//player = Cast<AUser>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 }
 
 // Called when the game starts or when spawned
 void ADragon::BeginPlay()
 {
 	Super::BeginPlay();
+	player = Cast<AUser>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+
 	
 }
 
@@ -127,6 +132,7 @@ void ADragon::CallSkill(ESkill i)
 void ADragon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!player) return;
 	//Cooltime, Distance, MP Append
 	//UE_LOG(LogTemp, Log, TEXT("rand"));
 	MP += DeltaTime;

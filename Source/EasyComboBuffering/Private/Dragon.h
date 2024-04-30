@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "FireBall.h"
 #include "User.h"
+#include "DragonAI.h"
 #include "Dragon.generated.h"
 
 USTRUCT()
@@ -74,7 +75,6 @@ private:
 	ESkill skillidx;
 	bool isMoving;
 	AFireBall* fireball;
-	UPROPERTY(EditAnywhere)
 	float mvamount;
 	UPROPERTY(EditAnywhere)
 	float w_speed;
