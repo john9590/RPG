@@ -10,7 +10,7 @@ ADragon::ADragon()
 	PrimaryActorTick.bCanEverTick = true;
 	skills.Add(FSkill(0.0f, 100000.0f, 0.0f, 1));
 	skills.Add(FSkill(3.0f, 500.0f, 0.0f, 1));
-	skills.Add(FSkill(1.0f, 2000.0f, 100.0f, 1));
+	skills.Add(FSkill(5.0f, 100000.0f, 1.0f, 1));
 	Direction = FVector(0.0f, 0.0f, 0.0f);
 	isMoving = false;
 	isPlaying = false;
@@ -28,7 +28,7 @@ void ADragon::Move()
 	FVector GetRot = FVector(Direction.X, Direction.Y, 0.0f);
 	AddMovementInput(GetRot.GetSafeNormal(), -mvamount * w_speed, true);
 	SetActorRotation(GetRot.Rotation() + FRotator(0.0f, 90.0f, 0.0f));
-	//UE_LOG(LogTemp, Log, TEXT("%f"), mvamount);
+	UE_LOG(LogTemp, Log, TEXT("%f"), mvamount);
 	if (isMoving) return;
 	if (animes[mvidx]) GetMesh()->PlayAnimation(animes[mvidx], true);
 	//GetMovementComponent()->AddRadialForce(Direction.GetSafeNormal(), 1.0f, 1.0f, ERadialImpulseFalloff::RIF_Constant);
@@ -82,7 +82,7 @@ void ADragon::AttackFireBall()
 	float x = xyspeed * xyVector.GetSafeNormal().X;
 	float y = xyspeed * xyVector.GetSafeNormal().Y;
 	fireball->Throw(FVector(x, y, zspeed), fb_time);
-	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::isPlayingoff, 5.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::isPlayingoff, 1.0f, false);
 	UE_LOG(LogTemp, Log, TEXT("%f %f"), initpos.X, initpos.Y);
 	//fireball->sphere->AddForce(FVector(-100000.0f, 0.0f, 100000.0f));
 }
@@ -130,6 +130,7 @@ void ADragon::Tick(float DeltaTime)
 	MP += DeltaTime;
 	mvamount = DeltaTime;
 	TArray<int> avskill;
+	//GetMovementComponent()->AddInputVector(FVector(-1.0f, 0.0f, 0.0f));
 	for (int i = 0; i < skills.Num(); i++) skills[i].curcool += DeltaTime;
 	//if (fireball) fireball->Tick(DeltaTime);
 	//Playing animation without Moving wait until it finished
@@ -147,8 +148,7 @@ void ADragon::Tick(float DeltaTime)
 	}
 	//UE_LOG(LogTemp, Log, TEXT("%d"),randvalue);
 	//Move();
-	CallSkill(afidx);
-	/*
+	//CallSkill(afidx);
 	if (randvalue > 0) {
 		randvalue = FGenericPlatformMath::Rand() % randvalue;
 		UE_LOG(LogTemp, Log, TEXT("%d"), randvalue);
@@ -160,6 +160,6 @@ void ADragon::Tick(float DeltaTime)
 			randvalue -= skills[i].rand;
 		}
 	}
-	*/
+	
 }
 
