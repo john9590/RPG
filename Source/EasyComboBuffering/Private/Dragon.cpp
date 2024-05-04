@@ -24,8 +24,8 @@ ADragon::ADragon()
 void ADragon::BeginPlay()
 {
 	Super::BeginPlay();
-	player = Cast<AUser>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-
+	//player = Cast<AUser>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	//Cast<ADragonAI>(AIControllerClass)->OnPossess(this);
 	
 }
 
@@ -36,7 +36,7 @@ void ADragon::Move()
 	SetActorRotation(GetRot.Rotation() + FRotator(0.0f, 90.0f, 0.0f));
 	UE_LOG(LogTemp, Log, TEXT("%f"), mvamount);
 	if (isMoving) return;
-	if (animes[mvidx]) GetMesh()->PlayAnimation(animes[mvidx], true);
+	//if (animes[mvidx]) GetMesh()->PlayAnimation(animes[mvidx], true);
 	//GetMovementComponent()->AddRadialForce(Direction.GetSafeNormal(), 1.0f, 1.0f, ERadialImpulseFalloff::RIF_Constant);
 	//AddMovementInput(Direction.GetSafeNormal(), -1.0f, true);
 	isMoving = true;
@@ -44,7 +44,7 @@ void ADragon::Move()
 
 void ADragon::Stop()
 {
-	GetMesh()->Stop();
+	//GetMesh()->Stop();
 	isMoving = false;
 }
 
@@ -61,7 +61,7 @@ void ADragon::AttackMouth()
 	skills[amidx].curcool = 0.0f;
 	FVector GetRot = FVector(Direction.X, Direction.Y, 0.0f);
 	SetActorRotation(GetRot.Rotation() + FRotator(0.0f, 90.0f, 0.0f));
-	if (animes[amidx]) GetMesh()->PlayAnimation(animes[amidx], false);
+	//if (animes[amidx]) GetMesh()->PlayAnimation(animes[amidx], false);
 	//FPlatformProcess::Sleep(0.5f);
 	//�̶� �÷��̾ ���� �Ÿ� �ȿ� ������ ������
 	if ((player->GetActorLocation() - GetActorLocation()).Size() < 500.0f) {
@@ -97,7 +97,7 @@ void ADragon::AttackFireBall()
 void ADragon::Scream()
 {
 	Stop();
-	if (skills[scidx].anime) GetMesh()->PlayAnimation(skills[scidx].anime, false);
+	//if (skills[scidx].anime) GetMesh()->PlayAnimation(skills[scidx].anime, false);
 	FPlatformProcess::Sleep(0.5f);
 	//�̶� �÷��̾ ���� �Ÿ� �ȿ� ������ �׷α�
 	if ((player->GetActorLocation() - GetActorLocation()).Size() < 100.0f) player->Groggy(3.0f);
@@ -120,7 +120,7 @@ void ADragon::CallSkill(ESkill i)
 			isPlaying = true;
 			skills[afidx].curcool = 0.0f;
 			SetActorRotation(GetRot.Rotation() + FRotator(0.0f, 90.0f, 0.0f));
-			if (animes[afidx]) GetMesh()->PlayAnimation(animes[afidx], false);
+			//if (animes[afidx]) GetMesh()->PlayAnimation(animes[afidx], false);
 			GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &ADragon::AttackFireBall, 0.5f, false);
 			break;
 		default:
@@ -132,6 +132,7 @@ void ADragon::CallSkill(ESkill i)
 void ADragon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	return;
 	if (!player) return;
 	//Cooltime, Distance, MP Append
 	//UE_LOG(LogTemp, Log, TEXT("rand"));

@@ -41,6 +41,6 @@ private:
 	FVector Speed;
 	UPROPERTY(EditAnywhere)
 	FTimerHandle TimerHandler;
-	AUser* User;
+	AUser* player;
 	UParticleSystem* ky_explosion;
 };

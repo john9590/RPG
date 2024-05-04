@@ -21,6 +21,7 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 
 	static const FName TargetKey;
+	static const FName DamageKey;
 private:
 	UBehaviorTree* BTAsset;
 	UBlackboardData* BBAsset;

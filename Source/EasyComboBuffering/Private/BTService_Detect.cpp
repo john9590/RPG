@@ -17,7 +17,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	UWorld* World = ControllingPawn->GetWorld();
 	FVector Center = ControllingPawn->GetActorLocation();
-	float DetectRadius = 600.0f;
+	float DetectRadius = 10000.0f;
 
 	if (nullptr == World) return;
 	TArray<FOverlapResult> OverlapResults;
@@ -37,13 +37,14 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	{
 		for (auto OverlapResult : OverlapResults)
 		{
-			AUser* User = Cast<AUser>(OverlapResult.GetActor());
-			//ÄÁÆ®·Ñ·¯°¡ ÇÃ·¹ÀÌ¾îÀÇ ÄÁÆ®·Ñ·¯ÀÎÁö
+			ACharacter* User = Cast<ACharacter>(OverlapResult.GetActor());
+			UE_LOG(LogTemp, Log, TEXT("%s"),*(OverlapResult.GetActor()->GetName()));
+			//ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½
 			if (User && User->GetController()->IsPlayerController())
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(ADragonAI::TargetKey, User);
 
-				//¹İ°æÀ» º¸¿©ÁØ´Ù
+				//ï¿½İ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Green, false, 0.2f);
 
 				//
@@ -55,7 +56,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	}
 	else
 	{
-		//null·Î ¼³Á¤ÇØÁØ´Ù.
+		UE_LOG(LogTemp, Log, TEXT("FALSE"));
+		//nullï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(ADragonAI::TargetKey, nullptr);
 	}
 

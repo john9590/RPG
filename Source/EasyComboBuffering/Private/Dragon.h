@@ -3,10 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "GameFramework/Pawn.h"
 #include "GenericPlatform/GenericPlatformMath.h"
 #include "Kismet/GameplayStatics.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "FireBall.h"
 #include "User.h"
 #include "DragonAI.h"
@@ -40,7 +39,7 @@ enum ESkill {
 };
 
 UCLASS()
-class ADragon : public ACharacter
+class ADragon : public APawn
 {
 	GENERATED_BODY()
 	
