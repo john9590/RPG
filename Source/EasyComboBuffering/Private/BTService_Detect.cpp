@@ -31,7 +31,6 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		CollisionQueryParam
 	);
 
-	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
 
 	if (bResult)
 	{
@@ -45,11 +44,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(ADragonAI::TargetKey, User);
 
 				//�ݰ��� �����ش�
-				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Green, false, 0.2f);
 
 				//
-				DrawDebugPoint(World, User->GetActorLocation(), 10.0f, FColor::Blue, false, 0.2f);
-				DrawDebugLine(World, ControllingPawn->GetActorLocation(), User->GetActorLocation(), FColor::Blue, false, 0.2f);
 				return;
 			}
 		}
@@ -61,5 +57,4 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(ADragonAI::TargetKey, nullptr);
 	}
 
-	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
 }

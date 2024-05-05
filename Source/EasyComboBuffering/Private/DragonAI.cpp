@@ -22,10 +22,8 @@ void ADragonAI::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	UBlackboardComponent* BlackboardComp = Blackboard;
-	UE_LOG(LogTemp, Log, TEXT("OnPossess"));
 	if (UseBlackboard(BBAsset, BlackboardComp))
 	{
-		UE_LOG(LogTemp, Log, TEXT("SasdasdDASD"));
 		if (!RunBehaviorTree(BTAsset))
 			UE_LOG(LogTemp, Warning, TEXT("AIController couldn't run behavior tree!"));
 	}

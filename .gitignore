@@ -18,6 +18,7 @@ mono_crash.*
 
 Content/
 Intermediate/
+Binaries/
 
 # Build results
 [Dd]ebug/

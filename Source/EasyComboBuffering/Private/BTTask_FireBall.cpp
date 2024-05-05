@@ -11,7 +11,6 @@ UBTTask_FireBall::UBTTask_FireBall()
 EBTNodeResult::Type UBTTask_FireBall::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
-	UE_LOG(LogTemp, Log, TEXT("BTTask_Fireball"));
 	auto player = Cast<ACharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ADragonAI::TargetKey));
 	if (nullptr == player)
 		return EBTNodeResult::Failed;
@@ -27,7 +26,7 @@ EBTNodeResult::Type UBTTask_FireBall::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	FVector2D xyVector = -FVector2D(Direction.X - initpos.X, Direction.Y - initpos.Y);
 	float distance = FMath::Max(xyVector.Length(), 0.001f);
 	float xyspeed = distance / fb_time;
-	float zspeed = (-Direction.Z + initpos.Z) / fb_time + 2.5f * fb_time * 9.8f;
+	float zspeed = (-Direction.Z + initpos.Z) / fb_time + 2.5f * fb_time * 19.6f;
 	float x = xyspeed * xyVector.GetSafeNormal().X;
 	float y = xyspeed * xyVector.GetSafeNormal().Y;
 	fireball->Throw(FVector(x, y, zspeed), fb_time);

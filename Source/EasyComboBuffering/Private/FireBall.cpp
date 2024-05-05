@@ -7,7 +7,6 @@
 AFireBall::AFireBall()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	UE_LOG(LogTemp, Log, TEXT("Constructor"));
 	sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	//sphere->AttachToComponent(DefaultScene, FAttachmentTransformRules::KeepRelativeTransform);
 	//sphere->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
@@ -29,6 +28,7 @@ void AFireBall::Throw(FVector pSpeed, float ptime)
 	time = ptime + 2.0f;
 	curtime = 0.0f;
 	Speed = pSpeed;
+	Prediction();
 }
 
 void AFireBall::FbDestory()
@@ -41,6 +41,7 @@ void AFireBall::Explosion()
 	//UParticleSystem* temp = LoadObject<UParticleSystem>(nullptr, TEXT("P_ky_explosion'/Game/FXVarietyPack/Particles/P_ky_explosion'"));
 	if (ky_explosion) ParticleSystem->SetTemplate(ky_explosion);
 	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &AFireBall::FbDestory, 1.0f, false);
+	UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->BeginPlay();
 	//if ((player->GetActorLocation() - GetActorLocation()).Size() < 100.0f) player->Hit(100.0f);
 	//FPlatformProcess::Sleep(1.0f);
 }
@@ -50,13 +51,14 @@ void AFireBall::Prediction()
 	FVector PrePos = GetActorLocation();
 	FVector CurSpeed = Speed;
 	while (PrePos.Z > 0.0f) {
-		PrePos = PrePos + CurSpeed * 0.1f;
-		CurSpeed.Z -= 9.8f * 0.1f;
+		PrePos += CurSpeed * 0.1f;
+		CurSpeed.Z -= 5.0f * 19.6f * 0.1f;
 	}
-	WarningSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
-	static ConstructorHelpers::FObjectFinder<UParticleSystem> WarningAsset(TEXT("P_ky_magicCircle1'/Game/FXVarietyPack/Particles/P_ky_magicCircle1'"));
-	if (WarningAsset.Succeeded()) WarningSystem->SetTemplate(WarningAsset.Object);
-	WarningSystem->SetWorldLocation(PrePos);
+	PrePos.Z = 25.0f;
+	GetWorld()->SpawnActor<APrediction>(APrediction::StaticClass(), PrePos, FRotator(0.f, 0.f, 0.f));
+	//WarningSystem = NewObject<UParticleSystemComponent>(this, TEXT("Particle"));
+	//WarningSystem->RegisterComponent();
+	//WarningSystem->SetWorldLocation(PrePos);
 }
 
 // Called when the game starts or when spawned
@@ -85,7 +87,7 @@ void AFireBall::Tick(float DeltaTime)
 			return;
 		}
 		SetActorLocation(GetActorLocation() + Speed * DeltaTime);
-		Speed.Z -= 5.0f * 9.8f * DeltaTime;
+		Speed.Z -= 5.0f * 19.6f * DeltaTime;
 	}
 }
 

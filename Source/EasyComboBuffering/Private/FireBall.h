@@ -8,6 +8,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "User.h"
+#include "Prediction.h"
 #include "FireBall.generated.h"
 
 UCLASS()
@@ -43,4 +44,5 @@ private:
 	FTimerHandle TimerHandler;
 	AUser* player;
 	UParticleSystem* ky_explosion;
+	UParticleSystem* ky_warning;
 };
