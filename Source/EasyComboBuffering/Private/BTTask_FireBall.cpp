@@ -11,7 +11,7 @@ UBTTask_FireBall::UBTTask_FireBall()
 EBTNodeResult::Type UBTTask_FireBall::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
-
+	UE_LOG(LogTemp, Log, TEXT("BTTask_Fireball"));
 	auto player = Cast<ACharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ADragonAI::TargetKey));
 	if (nullptr == player)
 		return EBTNodeResult::Failed;

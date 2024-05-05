@@ -5,7 +5,9 @@
 
 UBTTASK_Turn::UBTTASK_Turn()
 {
+	bNotifyTick = true;
 	NodeName = TEXT("Turn");
+	TargetRot = FRotator(0.f, 0.f, 0.f);
 }
 
 EBTNodeResult::Type UBTTASK_Turn::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -23,10 +25,24 @@ EBTNodeResult::Type UBTTASK_Turn::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	//Ÿ���� ��ġ�� ������ġ�� ���� ���⺤�͸� �����
 	FVector LockVector = Target->GetActorLocation() - ABCharacter->GetActorLocation();
 	LockVector.Z = 0.0f;
-	FRotator TargetRot = LockVector.Rotation(); //���⺤�ͷκ��� ������ ����(����?)
+	TargetRot = LockVector.Rotation(); //���⺤�ͷκ��� ������ ����(����?)
 	//������ŭ 2�ʿ� ���ļ� ȸ����Ų��.
-	ABCharacter->SetActorRotation(TargetRot);
-	//ABCharacter->SetActorRotation(FMath::RInterpTo(ABCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 0.01f));
-	
-	return EBTNodeResult::Succeeded;
+	//ABCharacter->SetActorRotation(TargetRot);
+	//ABCharacter->SetActorRotation(FMath::RInterpTo(ABCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 10.0f));
+	//while (!ABCharacter->GetActorRotation().Equals(TargetRot, 1.0f));
+	return EBTNodeResult::InProgress;
+}
+
+void UBTTASK_Turn::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) {
+	//UE_LOG(LogTemp, Log, TEXT("TickTask"));
+	auto ABCharacter = Cast<APawn>(OwnerComp.GetAIOwner()->GetPawn());
+	if (nullptr == ABCharacter) {
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		return;
+	}
+	ABCharacter->SetActorRotation(FMath::RInterpTo(ABCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 10.0f));
+	if (ABCharacter->GetActorRotation().Equals(TargetRot,1.0f)) {
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+		return;
+	}
 }

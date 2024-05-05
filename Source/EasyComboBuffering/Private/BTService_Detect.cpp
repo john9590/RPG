@@ -38,7 +38,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		for (auto OverlapResult : OverlapResults)
 		{
 			ACharacter* User = Cast<ACharacter>(OverlapResult.GetActor());
-			UE_LOG(LogTemp, Log, TEXT("%s"),*(OverlapResult.GetActor()->GetName()));
+			//UE_LOG(LogTemp, Log, TEXT("%s"),*(OverlapResult.GetActor()->GetName()));
 			//��Ʈ�ѷ��� �÷��̾��� ��Ʈ�ѷ�����
 			if (User && User->GetController()->IsPlayerController())
 			{
