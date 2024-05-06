@@ -8,13 +8,13 @@
 
 ## 개발 범위
 ### AI 
-![alt text](image.png)
+![alt text](Image/image.png)
 #### IDLE
-![alt text](image-2.png)
+![alt text](Image/image-2.png)
     
     보스랑 플레이어가 너무 멀거나 너무 가까우면 실행하는 것으로 IDLE01 애니메이션을 재생한다.
 #### WALK
-![alt text](image-1.png)
+![alt text](Image/image-1.png)
 
 [![Video Label](http://img.youtube.com/vi/Gl6H8AaaAZ0/0.jpg)](https://youtu.be/Gl6H8AaaAZ0)
 
@@ -22,7 +22,7 @@
     
 
 #### AttackMouth
-![alt text](image-3.png)
+![alt text](Image/image-3.png)
 
 [![Video Label](http://img.youtube.com/vi/P6mgh4gjzVE/0.jpg)](https://youtu.be/P6mgh4gjzVE)
 
@@ -31,7 +31,7 @@
 
 
 #### Scream
-![alt text](image-4.png)
+![alt text](Image/image-4.png)
 
 [![Video Label](http://img.youtube.com/vi/oaoJ8bZEgSA/0.jpg)](https://youtu.be/oaoJ8bZEgSA)
 
@@ -39,7 +39,7 @@
     애니메이션을 재생하고 0.5초 뒤에 플레이어와의 거리가 500.0 이하면 플레이어가 그로기 상태에 돌입한다.
 
 #### AttackFireball
-![alt text](image-5.png)
+![alt text](Image/image-5.png)
 
 [![Video Label](http://img.youtube.com/vi/--aJRXc4b4Q/0.jpg)](https://youtu.be/--aJRXc4b4Q)
 
@@ -49,19 +49,19 @@
     Fireball의 오브젝트가 생성되면 5초 동안 포물선 궤도를 따라 플레이어의 위치에 떨어지게 되고 날아가는 도중에 플레이어에게 닿으면 터지게 된다. 그리고 생성되자 마자 예상되는 떨어지는 지점에 경고 장판을 생성한다.
 
 #### DIE
-![alt text](image-8.png)
+![alt text](Image/image-8.png)
 
 [![Video Label](http://img.youtube.com/vi/3nGutFbcPyY/0.jpg)](https://youtu.be/3nGutFbcPyY)
 
     보스의 HP가 0이하로 내려가면 실행되는 것으로 애니메이션을 재생한 후에 더이상 아무런 행동을 하지 않는다.
 
 ### 플레이어
-![alt text](image-6.png)
+![alt text](Image/image-6.png)
 
     플레이어는 기본적으로 EasyComboBuffering 에셋을 사용하여 구현하였으며 그로기, 공격, 피격 처리를 구현하였다.
 
 #### 공격
-![alt text](image-7.png)
+![alt text](Image/image-7.png)
     
     플레이어 앞에 다음과 같이 구모양의 collsion을 두고 이 구 안에 보스가 있을때 공격을 하면 보스의 HP가 줄어들도록 구현하였다.
 
