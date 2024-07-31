@@ -16,6 +16,9 @@ public:
 	AUser();
 	void Hit(float damage);
 	void Groggy(float time);
+	UFUNCTION(BlueprintImplementableEvent)
+	void Damaged(float damage);
+
 
 protected:
 	// Called when the game starts or when spawned

@@ -22,10 +22,10 @@ EBTNodeResult::Type UBTTASK_Turn::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (nullptr == Target)
 		return EBTNodeResult::Failed;
 
-	//Ÿ���� ��ġ�� ������ġ�� ���� ���⺤�͸� �����
+	//Ÿ���� ��ġ�� ������ġ�� ���� ���⺤�͸� �����?
 	FVector LockVector = Target->GetActorLocation() - ABCharacter->GetActorLocation();
 	LockVector.Z = 0.0f;
-	TargetRot = LockVector.Rotation(); //���⺤�ͷκ��� ������ ����(����?)
+	TargetRot = LockVector.Rotation(); //���⺤�ͷκ��� ������ ����?����?)
 	//������ŭ 2�ʿ� ���ļ� ȸ����Ų��.
 	//ABCharacter->SetActorRotation(TargetRot);
 	//ABCharacter->SetActorRotation(FMath::RInterpTo(ABCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 10.0f));
