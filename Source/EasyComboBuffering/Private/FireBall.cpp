@@ -41,7 +41,7 @@ void AFireBall::Explosion()
 	//UParticleSystem* temp = LoadObject<UParticleSystem>(nullptr, TEXT("P_ky_explosion'/Game/FXVarietyPack/Particles/P_ky_explosion'"));
 	if (ky_explosion) ParticleSystem->SetTemplate(ky_explosion);
 	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &AFireBall::FbDestory, 1.0f, false);
-	player->Damaged(20.0f);
+	player->Hit(20.f);
 	//if ((player->GetActorLocation() - GetActorLocation()).Size() < 100.0f) player->Hit(100.0f);
 	//FPlatformProcess::Sleep(1.0f);
 }

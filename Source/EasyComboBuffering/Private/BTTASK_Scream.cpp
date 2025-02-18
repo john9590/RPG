@@ -16,7 +16,6 @@ EBTNodeResult::Type UBTTASK_Scream::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	if (nullptr == Target)
 		return EBTNodeResult::Failed;
 
-	//Ÿ���� ��ġ�� ������ġ�� ���� ���⺤�͸� �����
 	Target->Groggy(1.0f);
 
 	return EBTNodeResult::Succeeded;

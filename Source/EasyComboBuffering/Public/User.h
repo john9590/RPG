@@ -31,10 +31,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-private:
+public: 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float HP;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float MaxHP;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool isgroggy;
+
+private:
 	float remaingroggy;
 };
