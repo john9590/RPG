@@ -27,7 +27,12 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void Damaged(flaot damage);
+	UFUNCTION(BlueprintCallable)
+	void Damaged(float damage);
+	UFUNCTION(BlueprintImplementableEvent)
+	void Died();
+	UFUNCTION(BlueprintImplementableEvent)
+	void hit();
 
 private:
 	float Hp;

@@ -14,6 +14,14 @@ AMonster::AMonster()
 	
 }
 
+void AMonster::Damaged(float damage) {
+	Hp -= damage;
+	hit();
+	if (Hp <= 0.f) {
+		Died();
+	}
+}
+
 // Called when the game starts or when spawned
 void AMonster::BeginPlay()
 {
