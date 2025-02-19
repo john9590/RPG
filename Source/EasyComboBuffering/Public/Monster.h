@@ -34,10 +34,12 @@ public:
 	void Died();
 	UFUNCTION(BlueprintImplementableEvent)
 	void hit();
+	UFUNCTION(BlueprintCallable)
+	float GetHp();
 
 	UPROPERTY(EditAnywhere)
 	float MaxHp;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxMp;
 private:
 	AMonsterAI* AIController;

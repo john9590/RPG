@@ -31,6 +31,11 @@ void AMonster::Damaged(float damage) {
 	}
 }
 
+float AMonster::GetHp()
+{
+	return Hp;
+}
+
 // Called when the game starts or when spawned
 void AMonster::BeginPlay()
 {

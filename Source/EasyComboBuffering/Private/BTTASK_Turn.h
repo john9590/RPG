@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "DragonAI.h"
-#include "Dragon.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "User.h"
+#include "MonsterAI.h"
 #include "BTTASK_Turn.generated.h"
 
 /**
