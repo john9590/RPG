@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "MonsterAI.h"
 #include "Monster.generated.h"
 
 UCLASS()
@@ -34,8 +35,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void hit();
 
-private:
-	float Hp;
+	UPROPERTY(EditAnywhere)
+	float MaxHp;
+	UPROPERTY(EditAnywhere)
 	float MaxMp;
+private:
+	AMonsterAI* AIController;
+	float Hp;
 	float Mp;
 };

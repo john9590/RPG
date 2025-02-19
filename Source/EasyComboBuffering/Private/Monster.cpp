@@ -9,16 +9,25 @@ AMonster::AMonster()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Hp = 0.f;
+	MaxHp = 0.f;
 	Mp = 0.f;
 	MaxMp = 0.f;
-	
 }
 
 void AMonster::Damaged(float damage) {
 	Hp -= damage;
-	hit();
-	if (Hp <= 0.f) {
-		Died();
+	if (!AIController) {
+		AController* c = GetController();
+		if (c)
+		{
+			AIController = Cast<AMonsterAI>(c);
+		}
+	}
+	if (AIController) {
+		AIController->GetHit();
+		if (Hp <= 0.f) {
+			AIController->GetDied();
+		}
 	}
 }
 
@@ -26,7 +35,8 @@ void AMonster::Damaged(float damage) {
 void AMonster::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Mp = MaxMp;
+	Hp = MaxHp;
 }
 
 // Called every frame
