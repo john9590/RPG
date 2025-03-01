@@ -11,6 +11,8 @@ AUser::AUser()
 	isgroggy = false;
 	MaxHP = 100.f;
 	HP = MaxHP;
+	Attack = 1.f;
+	Defense = 0.f;
 }
 
 void AUser::Hit(float damage)

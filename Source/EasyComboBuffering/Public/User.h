@@ -38,6 +38,10 @@ public:
 	float MaxHP;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool isgroggy;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float Attack;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float Defense;
 
 private:
 	float remaingroggy;

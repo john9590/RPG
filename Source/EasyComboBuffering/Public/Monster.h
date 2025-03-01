@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Components/WidgetComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "MonsterAI.h"
 #include "Monster.generated.h"
 
@@ -37,6 +40,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetHp();
 
+	UPROPERTY(EditAnywhere)
+	USkeletalMeshComponent* mesh;
+	UPROPERTY(EditAnywhere)
+	UCapsuleComponent* capsule;
+	UPROPERTY(EditAnywhere)
+	UWidgetComponent* HPBarWidget;
 	UPROPERTY(EditAnywhere)
 	float MaxHp;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

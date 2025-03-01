@@ -15,7 +15,8 @@ EBTNodeResult::Type UBT_Damaged::ExecuteTask(UBehaviorTreeComponent& OwnerComp, 
 	auto Target = Cast<AUser>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ADragonAI::TargetKey));
 	if (nullptr == Target)
 		return EBTNodeResult::Failed;
+	float Damage = OwnerComp.GetBlackboardComponent()->GetValueAsFloat((TEXT("NDamage")));
 	//float Damage = OwnerComp.GetBlackboardComponent()->GetValueAsFloat(ADragonAI::DamageKey);
-	Target->Hit(10.0f);
+	Target->Hit(Damage);
 	return EBTNodeResult::Succeeded;
 }
