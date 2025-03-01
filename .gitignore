@@ -16,13 +16,9 @@
 # Mono auto generated files
 mono_crash.*
 
-Content/Collections/
-Content/Developers/
-Content/EasyComboBuffering/
-Content/FantasyBundle/
-Content/FourEvilDragonsPBR/
-Content/FXVarietyPack/
-Content/Realistic_Starter_VFX_Pack_Vol2/
+Content/*
+
+!Content/**/*.RPG
 Intermediate/
 Binaries/
 Saved/
