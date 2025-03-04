@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Monster.h"
 #include "MonsterHP.h"
 #include "Item.h"
-#include "Monster.h"
 
 // Sets default values
 AMonster::AMonster()
