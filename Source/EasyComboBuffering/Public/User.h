@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include <vector>
 #include "User.generated.h"
 
 UCLASS()
@@ -18,6 +19,7 @@ public:
 	void Groggy(float time);
 	UFUNCTION(BlueprintImplementableEvent)
 	void Damaged(float damage);
+	void SetBuff(float enhance, float time, int idx);
 
 
 protected:
@@ -45,4 +47,5 @@ public:
 
 private:
 	float remaingroggy;
+	std::vector<std::pair<int,int>> buffq;
 };

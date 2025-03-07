@@ -46,7 +46,7 @@ public:
 	UCapsuleComponent* capsule;
 	UPROPERTY(EditAnywhere)
 	UWidgetComponent* HPBarWidget;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxHp;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxMp;

@@ -22,6 +22,7 @@ void APlayerStat::UseItem(int32 index)
 		OnRep_Items();
 		if (AUser* player = Cast<AUser>(GetOwningController()->GetPawn())) {
 			player->Hit(-Items[index].HP);
+			player->SetBuff(Items[index].Buff, 5.f, index);
 		}
 	}
 }

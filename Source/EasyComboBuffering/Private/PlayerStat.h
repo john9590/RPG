@@ -19,7 +19,7 @@ public:
 
     // 마나 (MP)
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Item Stats")
-    float MP;
+    float Buff;
 
     // 아이템 이미지 (Texture2D) - Texture2D는 Replicated 지원되지 않음!
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Item Stats")
@@ -31,10 +31,10 @@ public:
 
     // 기본값 설정 (생성자)
     FItemStruct()
-        : HP(0.0f), MP(0.0f), Image(nullptr), Count(0)
+        : HP(0.f), Buff(1.f), Image(nullptr), Count(0)
     {}
-    FItemStruct(float hp, float mp, UTexture2D* image)
-        : HP(hp), MP(mp), Image(image), Count(1)
+    FItemStruct(float hp, float buff, UTexture2D* image)
+        : HP(hp), Buff(buff), Image(image), Count(1)
     {}
 };
 
