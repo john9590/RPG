@@ -33,10 +33,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Damaged(float damage);
-	UFUNCTION(BlueprintImplementableEvent)
-	void Died();
-	UFUNCTION(BlueprintImplementableEvent)
-	void hit();
 	UFUNCTION(BlueprintCallable)
 	float GetHp();
 

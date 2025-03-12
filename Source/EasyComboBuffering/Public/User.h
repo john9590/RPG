@@ -17,8 +17,6 @@ public:
 	AUser();
 	void Hit(float damage);
 	void Groggy(float time);
-	UFUNCTION(BlueprintImplementableEvent)
-	void Damaged(float damage);
 	void SetBuff(float enhance, float time, int idx);
 
 

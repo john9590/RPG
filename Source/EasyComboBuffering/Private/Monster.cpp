@@ -2,7 +2,6 @@
 
 #include "Monster.h"
 #include "MonsterHP.h"
-#include "Item.h"
 
 // Sets default values
 AMonster::AMonster()
@@ -19,17 +18,17 @@ AMonster::AMonster()
 	RootComponent = capsule;
 	mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	mesh->SetupAttachment(RootComponent);
-	// 2. SkeletalMeshComponent¿¡¼­ ´Ù¸¥ Ãæµ¹À» ¸ðµÎ ²û
+	// 2. SkeletalMeshComponentï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-	capsule->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);  // ´Ù¸¥ `Pawn`°ú Ãæµ¹ Çã¿ë
+	capsule->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);  // ï¿½Ù¸ï¿½ `Pawn`ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½
 	//capsule->SetupAttachment(RootComponent);
 	HPBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBarWidget"));
 	HPBarWidget->SetupAttachment(RootComponent); 
 	HPBarWidget->SetWidgetSpace(EWidgetSpace::World);
 	HPBarWidget->SetDrawSize(FVector2D(150, 20));
-	HPBarWidget->SetRelativeLocation(FVector(0.f, 0.f, 50.f)); // ºÎ¸ð ±âÁØ »ó´ë À§Ä¡
-	HPBarWidget->SetRelativeRotation(FRotator(0.f, 90.f, 0.f)); // ºÎ¸ð ±âÁØ »ó´ë È¸Àü
-	HPBarWidget->SetSimulatePhysics(false);  // ¹°¸® ½Ã¹Ä·¹ÀÌ¼Ç ºñÈ°¼ºÈ­
+	HPBarWidget->SetRelativeLocation(FVector(0.f, 0.f, 50.f)); // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+	HPBarWidget->SetRelativeRotation(FRotator(0.f, 90.f, 0.f)); // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
+	HPBarWidget->SetSimulatePhysics(false);  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¹Ä·ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
 }
 
 void AMonster::Damaged(float damage) {

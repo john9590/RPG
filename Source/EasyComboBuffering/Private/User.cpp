@@ -50,8 +50,8 @@ void AUser::SetBuff(float enhance, float time, int idx)
 					if (buffq[i].second <= 0) {
 						Attack /= enhance;
 						buffq.erase(buffq.begin() + i);
-						break;
 					}
+					break;
 				}
 			}
 		}, time, false);

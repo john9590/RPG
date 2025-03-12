@@ -1,72 +1,94 @@
-# Project RPG
-### 액션 RPG 장르의 보스전을 언리얼 엔진을 통해 만든 포트폴리오용 게임
-    보스의 패턴에 따라 적절히 공격과 회피를 하여 보스를 물리치자!
-- 개발 규모 : 1인
-- 사용 엔진 : Unreal Engine 5.3.2
-- 개발 도구 : C++(Visual Studio), BluePrint
-- 사용 어셋 : EasyComboBuffering, FantasyBundleEnviroment, FXVarietyPack, Realistic_Starter_VFX_Pack_Vol2
+# 🐲 Project RPG - 보스전 중심 단계형 액션 RPG
 
-## 개발 범위
-### AI 
-![alt text](Image/image.png)
-#### IDLE
-![alt text](Image/image-2.png)
-    
-보스랑 플레이어가 너무 멀거나 너무 가까우면 실행하는 것으로 IDLE01 애니메이션을 재생한다.
-#### WALK
-![alt text](Image/image-1.png)
+> 언리얼 엔진 5 기반 1인 개발 RPG 프로젝트  
+> **스테이지별 몬스터 패턴 설계**, **포션 시스템**, **보스전 전환**,  
+> 그리고 다양한 전투 로직과 애니메이션을 구현하였습니다.
 
-[![Video Label](http://img.youtube.com/vi/Gl6H8AaaAZ0/0.jpg)](https://youtu.be/Gl6H8AaaAZ0)
+---
 
-WalkAnim을 실행하는 도중에 Player를 Target으로 잡아 그 방향으로 선형적으로 움직이면서 Rotation을 바꿔주는 Turn을 실행한다.
-    
+## 🧭 게임 구조 개요
 
-#### AttackMouth
-![alt text](Image/image-3.png)
+### 📍 스테이지 구성
 
-[![Video Label](http://img.youtube.com/vi/P6mgh4gjzVE/0.jpg)](https://youtu.be/P6mgh4gjzVE)
+| 단계 | 몬스터  | 특징 |
+|------|----------|--------|
+| 1단계 | Grux 1마리 | 단거리 돌진 후 **1회 일반 공격** |
+| 2단계 | Grux 2마리 | 같은 패턴으로 동시에 등장 |
+| 3단계 | Kraken 1마리 | **3가지 패턴을 순환하며 공격** |
+| 보스전 | Dragon 1마리 | 원거리 Fireball + 그로기 + 근접공격 |
 
-보스랑 플레이어의 거리가 500.0 이하이고 cooltime이 5초이면 실행된다.
-Player를 바라본 후 애니메이션을 재생하면서 0.5초 뒤에 플레이어가 보스 기준 전방 30도 각도 안이면서 거리가 500.0 이하면 플레이어에게 데미지를 준다.
+---
+
+## 🧪 몬스터별 전투 패턴
+
+### 🧟 몬스터 공통
+- **AI**: Behavior Tree로 구현
+- **피격** : 피격시 행동을 멈추고 피격 애니메이션 재생(보스는 제외)
+- **사망** : HP가 0이하일시 사망 판정, 사망 이후엔 행동을 하지 않음
+- **패턴** : 조건(거리, 쿨타임)에 따라 패턴 전환
+
+---
+
+### 🦍 Grux
+
+- **패턴 목록**: 
+  1. `Attack` - 일반 공격
+
+---
+
+### 🐙 Kraken
+- **패턴 목록**:
+  1. `SmashAttack` - 땅을 내리쳐서 큰 피해
+  2. `SweepAttack` - 좌우로 쓸기 공격 2회
+  3. `SweepSmashAttack` - Sweep 공격 후 Smash 공격
+
+---
+
+### 🐉 보스 Dragon
+- **패턴 목록**:
+  - `AttackMouth`: 전방 근접 베기
+  - `Scream`: 500 이하 범위 시 **3초 그로기**
+  - `Fireball`: 예측 위치로 경고 장판 → 파이어볼 투하
 
 
-#### Scream
-![alt text](Image/image-4.png)
+---
 
-[![Video Label](http://img.youtube.com/vi/oaoJ8bZEgSA/0.jpg)](https://youtu.be/oaoJ8bZEgSA)
+## 🍯 전투 보조 시스템
 
-보스랑 플레이어의 거리가 500.0 이하이고 cooltime이 7초이면 실행된다.
-애니메이션을 재생하고 0.5초 뒤에 플레이어와의 거리가 500.0 이하면 플레이어가 그로기 상태에 돌입한다.
+### 💊 포션 시스템
+- 몬스터 사망 시 포션 드랍
+- 플레이어가 습득 시 **UI 인벤토리에 등록**
+- **사용 가능 포션**:
+  - HP 회복 포션 → 체력 즉시 회복
+  - 공격력 버프 포션 → 일정 시간 공격력 강화 (`SetBuff`)
+  - HP 회복 및 공격력 버프 포션 → 체력 즉시 회복 및 일정시간 공격력 강화 (`SetBuff`)
 
-#### AttackFireball
-![alt text](Image/image-5.png)
+- 포션 수량은 UI에 실시간 반영되며, 소비 시 감소
 
-[![Video Label](http://img.youtube.com/vi/--aJRXc4b4Q/0.jpg)](https://youtu.be/--aJRXc4b4Q)
+---
 
-cooltime이 10초면 실행된다.
-플레이어를 바라본 뒤 애니메이션을 실행하고 0.3초 뒤에 Fireball의 오브젝트를 생성한다. 그 후 애니메이션이 끝난 후 2초동안은 Idle01을 실행하면서 후딜레이를 겪는다.
+## 📍 단계 진행 로직
 
-Fireball의 오브젝트가 생성되면 5초 동안 포물선 궤도를 따라 플레이어의 위치에 떨어지게 되고 날아가는 도중에 플레이어에게 닿으면 터지게 된다. 그리고 생성되자 마자 예상되는 떨어지는 지점에 경고 장판을 생성한다.
+1. 플레이어가 몬스터 처치 → Delegate를 통해 다음 단계 시작
+3. 3단계 종료 → 포탈 생성 → `보스맵 이동`
+4. Dragon 보스와 최종 결전
 
-#### DIE
-![alt text](Image/image-8.png)
+---
 
-[![Video Label](http://img.youtube.com/vi/3nGutFbcPyY/0.jpg)](https://youtu.be/3nGutFbcPyY)
+## 📂 주요 클래스 및 구조
 
-보스의 HP가 0이하로 내려가면 실행되는 것으로 애니메이션을 재생한 후에 더이상 아무런 행동을 하지 않는다.
+| 클래스 | 역할 | 문서 링크 |
+|--------|------|-----------|
+| `User` | 플레이어 상태 및 버프 처리 | [📄 User.md](/docs/User.md) |
+| `PlayerStat` | 인벤토리 및 아이템 사용 | [📄 PlayerStat.md](/docs/PlayerStat.md) |
+| `Inventory` | 아이템 구조 및 처리 방식 | [📄 Inventory.md](/docs/Inventory.md) |
+| `Monster` | 몬스터 기본 행동 및 체력 UI | [📄 Monster.md](/docs/Monster.md) |
+| `BTTask_FireBall` | 보스 패턴 실행 (투사체) | [📄 BTTask_FireBall.md](/docs/BTTask_FireBall.md) |
 
-### 플레이어
-![alt text](Image/image-6.png)
+---
 
-플레이어는 기본적으로 EasyComboBuffering 에셋을 사용하여 구현하였으며 그로기, 공격, 피격 처리를 구현하였다.
+## 🎥 시연 영상
 
-#### 공격
-![alt text](Image/image-7.png)
-    
-플레이어 앞에 다음과 같이 구모양의 collsion을 두고 이 구 안에 보스가 있을때 공격을 하면 보스의 HP가 줄어들도록 구현하였다.
+[![Watch Demo](http://img.youtube.com/vi/1jw-9zZk6bU/0.jpg)](https://www.youtube.com/watch?v=1jw-9zZk6bU)
 
-#### 피격
-Custom Event인 Damaged를 AI에서 호출하면 HP를 달도록 구현하였다. 만약 HP가 0이하로 내려간다면 게임이 끝난 것이니 플레이할 수 없도록 하였다.
-
-#### 그로기
-Custom Event인 Groggy를 AI에서 호출하면 bool값인 변수를 통해 플레이어의 행동을 못하게 하였다. 이때 인자로 받은 Duration만큼 Delay가 끝난 후에 게임이 끝나지 않았다면 다시 변수를 false로 해줘 정상적으로 게임을 할 수 있도록 하였다.
+---
