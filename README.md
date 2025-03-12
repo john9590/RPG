@@ -81,8 +81,8 @@
 |--------|------|-----------|
 | `User` | 플레이어 상태 및 버프 처리 | [📄 User.md](/docs/User.md) |
 | `PlayerStat` | 인벤토리 및 아이템 사용 | [📄 PlayerStat.md](/docs/PlayerStat.md) |
-| `Inventory` | 아이템 구조 및 처리 방식 | [📄 Inventory.md](/docs/Inventory.md) |
 | `Monster` | 몬스터 기본 행동 및 체력 UI | [📄 Monster.md](/docs/Monster.md) |
+| `MonsterAI` | 몬스터 AI 시스템 | [📄 MonsterAI.md](/docs/MonsterAI.md) |
 | `BTTask_FireBall` | 보스 패턴 실행 (투사체) | [📄 BTTask_FireBall.md](/docs/BTTask_FireBall.md) |
 
 ---
