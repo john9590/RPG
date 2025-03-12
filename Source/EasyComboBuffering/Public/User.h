@@ -42,6 +42,8 @@ public:
 	float Attack;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Defense;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<int> buff;
 
 private:
 	float remaingroggy;

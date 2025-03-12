@@ -7,7 +7,7 @@
 ## 🛠 주요 함수
 
 ### 1. `Event Get Died`
-
+![alt text](../Image/image-1.png)
 - **역할**: 몬스터가 사망할 때 호출되는 함수입니다.
 - **기능**:
   - `isDied` 값을 `true`로 설정하여 사망 상태로 전환합니다.
@@ -16,6 +16,7 @@
 ---
 
 ### 2. `Run Behavior`
+![alt text](../Image/image.png)
 - **역할**: BeginPlay 시 호출되어 몬스터의 행동 트리(Behavior Tree)를 실행합니다.
 - **기능**:
   - Cast To `Grux`, `Kraken`, `Dragon`을 통해 각 몬스터에 맞는 BT를 실행합니다.
@@ -23,6 +24,7 @@
 ---
 
 ### 3. `Event Get Hit`
+![alt text](../Image/image-2.png)
 - **역할**: 몬스터가 피격될 때 호출되는 함수입니다.
 - **기능**:
   - isHit 값을 true로 설정하고, Blackboard에 데미지 수치를 반영합니다.

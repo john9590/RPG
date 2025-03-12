@@ -89,6 +89,6 @@
 
 ## 🎥 시연 영상
 
-[![Watch Demo](http://img.youtube.com/vi/1jw-9zZk6bU/0.jpg)](https://www.youtube.com/watch?v=1jw-9zZk6bU)
+[![Watch Demo](http://img.youtube.com/vi/BvPEk9q_KU8/0.jpg)](https://www.youtube.com/watch?v=BvPEk9q_KU8)
 
 ---

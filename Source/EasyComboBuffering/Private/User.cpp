@@ -40,6 +40,7 @@ void AUser::SetBuff(float enhance, float time, int idx)
 	}
 	if (!isinlist) {
 		Attack *= enhance;
+		buff.Add(idx);
 		buffq.push_back(std::pair<int, int>(idx, 1));
 	}
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this, idx , enhance]()
@@ -50,6 +51,7 @@ void AUser::SetBuff(float enhance, float time, int idx)
 					if (buffq[i].second <= 0) {
 						Attack /= enhance;
 						buffq.erase(buffq.begin() + i);
+						buff.Remove(idx);
 					}
 					break;
 				}
